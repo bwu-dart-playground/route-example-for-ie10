@@ -8,31 +8,27 @@ import 'package:angular2/router.dart';
 @Component(
     selector: 'my-app',
     templateUrl: 'app_component.html',
-    directives: const [
-      ROUTER_DIRECTIVES]
-)
+    directives: const [ROUTER_DIRECTIVES])
 @RouteConfig(const [
-  const Route(path: '/a',
-      component: AComponent,
-      useAsDefault: true,
-      name: 'ARoute'),
-  const Route(path: '/b',
-      component: BComponent,
-      name: 'BRoute'),
-  const Route(path: '/c',
-      component: CComponent,
-      name: 'CRoute'),
+  const Route(
+      path: '/a', component: AComponent, useAsDefault: true, name: 'ARoute'),
+  const Route(path: '/b/:id', component: BComponent, name: 'BRoute'),
+  const Route(path: '/c', component: CComponent, name: 'CRoute'),
 ])
-class AppComponent {}
+class AppComponent {
+  AppComponent(Router router) {
+    router.subscribe((val) {
+      print(router.currentInstruction.component.params['id']);
+      print(val);
+    });
+  }
+}
 
 @Component(selector: 'a-cmp', template: '<p>A Route</p>')
-class AComponent {
-}
+class AComponent {}
 
 @Component(selector: 'b-cmp', template: '<p>B Route</p>')
-class BComponent {
-}
+class BComponent {}
 
 @Component(selector: 'c-cmp', template: '<p>C Route</p>')
-class CComponent {
-}
+class CComponent {}
